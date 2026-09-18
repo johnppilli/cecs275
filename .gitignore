@@ -1,0 +1,10 @@
+.DS_Store
+*.pdf
+*.zip
+
+# compiled binaries
+lab1demo
+lab2demo
+lab3demo
+lab4demo
+lab5demo
