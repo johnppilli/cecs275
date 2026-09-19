@@ -46,31 +46,42 @@ string generateRandomUsername()
 
 string generateRandomPassword()
 {
-
     // generate one by one: lowercase, uppercase number
     // length = 12
     string firstnumber1 = randomNumberInRange(0, 9);
+    string lowerletter1 = randomLowerCaseLetter();
+    string upperletter1 = randomCapitalLetter();
 
     string firstnumber2 = randomNumberInRange(0, 9);
+    string lowerletter2 = randomLowerCaseLetter();
+    string upperletter2 = randomCapitalLetter();
 
     string firstnumber3 = randomNumberInRange(0, 9);
+    string lowerletter3 = randomLowerCaseLetter();
+    string upperletter3 = randomCapitalLetter();
 
     string firstnumber4 = randomNumberInRange(0, 9);
+    string lowerletter4 = randomLowerCaseLetter();
+    string upperletter4 = randomCapitalLetter();
 
-    return "";
+    return firstnumber1 + lowerletter1 + upperletter1 + firstnumber2 + lowerletter2 + upperletter2 + firstnumber3 + lowerletter3 + upperletter3 + firstnumber4 + lowerletter4 + upperletter4;
 }
-
-string randomLowercaseLetter()
+string randomLowerCaseLetter()
 {
-    char alphabet[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
-    string lowercaseletter = ""; // intialize with empty string
-    lowercaseletter += alphabet[rand() % 26]; //append the string with random letter from laphabet
+    char loweralphabet[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+    string lowercaseletter = "";                   // intialize with empty string
+    lowercaseletter += loweralphabet[rand() % 26]; // append the string with random letter from laphabet
 
     return lowercaseletter;
 }
 
-string randomCapitalLetter(int length)
+string randomCapitalLetter()
 {
+    char upperalphabet[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+    string uppercaseletter = "";
+    uppercaseletter += upperalphabet[rand() % 26];
+
+    return uppercaseletter;
 }
 
 /*

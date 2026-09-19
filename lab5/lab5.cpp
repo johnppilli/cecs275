@@ -54,7 +54,7 @@ int main()
 // TODO:
 // generateFakeData
 #ifdef DEBUG
-            cout << "Main Menu Option 1 is selected" << endl;
+            cout << generateRandomPassword() << endl;
 #endif
             break;
         }
