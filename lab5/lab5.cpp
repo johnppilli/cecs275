@@ -73,16 +73,19 @@ int main()
         case 3:
         {
             // Ask the user for username and password
+            break;
         }
         case 4:
         {
             // ask for registration info
             // username and password only
             // NOT REQUIRED
+            break;
         }
         case 5:
         {
             // password reset
+            break;
         }
         case 6:
         {

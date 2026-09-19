@@ -5,14 +5,18 @@
 
 #include <string>
 
-std::string randomWord();
+std::string randomWord(int length);
 
-std::string randomNumberInRange();
+std::string randomNumberInRange(int lowerBound, int upperBound);
 
 std::string generateRandomUsername();
 
 std::string generateRandomPassword();
 
 std::string generateRandomScores(int min, int max);
+
+std::string randomCapitalLetter();
+
+std::string randomLowerCaseLetter();
 
 #endif

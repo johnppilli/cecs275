@@ -44,14 +44,34 @@ string generateRandomUsername()
     return username + numberPart;
 }
 
-/*
- *
- *
 string generateRandomPassword()
 {
-}
-*/
 
+    // generate one by one: lowercase, uppercase number
+    // length = 12
+    string firstnumber1 = randomNumberInRange(0, 9);
+
+    string firstnumber2 = randomNumberInRange(0, 9);
+
+    string firstnumber3 = randomNumberInRange(0, 9);
+
+    string firstnumber4 = randomNumberInRange(0, 9);
+
+    return "";
+}
+
+string randomLowercaseLetter()
+{
+    char alphabet[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+    string lowercaseletter = ""; // intialize with empty string
+    lowercaseletter += alphabet[rand() % 26]; //append the string with random letter from laphabet
+
+    return lowercaseletter;
+}
+
+string randomCapitalLetter(int length)
+{
+}
 
 /*
  *
@@ -64,5 +84,3 @@ string generateRandomScores(int min, int max)
 {
 }
 */
-
-
