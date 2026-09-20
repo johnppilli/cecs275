@@ -30,9 +30,7 @@ int main()
 {
 
     // generate 100 fake data stored in a txt file
-    // srand(time(NULL)); // seed random number genatoro
-
-    // cout << generateRandomUsername() << endl;
+    srand(time(NULL)); // seed random number genatoro
 
     const int MAIN_MENU_SIZE = 6;
     const string mainMenu[MAIN_MENU_SIZE] = {"Generate Fake Data", "Select Data Sets", "Register", "Forget Password", "Log In", "Exit"};
@@ -51,11 +49,23 @@ int main()
         {
         case 1:
         {
-// TODO:
-// generateFakeData
-#ifdef DEBUG
-            cout << generateRandomPassword() << endl;
-#endif
+            // TODO:
+            // generateFakeData
+            cout << "Generating profiles" << endl;
+
+            ofstream out;
+            out.open("userdatabase.txt"); // open database
+
+            out << setw(15) << "Username" << setw(15) << "Password" << endl; // formatting
+            out << setw(15) << "JohnDoe123" << setw(15) << "John123" << endl;
+
+            for (int i = 0; i < 100; i++)
+            {
+                out << setw(15) << generateRandomUsername()
+                    << setw(15) << generateRandomPassword()
+                    << endl;
+            }
+            out.close();
             break;
         }
         case 2:
@@ -72,7 +82,15 @@ int main()
         }
         case 3:
         {
+            string username;
+            string password;
+
             // Ask the user for username and password
+            cout << "Enter your username: " << endl;
+            cin >> username;
+            cout << "Enter your password: " << endl;
+            cin >> password;
+
             break;
         }
         case 4:
