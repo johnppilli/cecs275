@@ -33,9 +33,10 @@ int main()
     srand(time(NULL)); // seed random number genatoro
 
     const int MAIN_MENU_SIZE = 6;
-    const string mainMenu[MAIN_MENU_SIZE] = {"Generate Fake Data", "Select Data Sets", "Register", "Forget Password", "Log In", "Exit"};
+    const string mainMenu[MAIN_MENU_SIZE] = {"Generate Fake Data", "Select Data Sets", "Log In", "Forget Password", "Register", "Exit"};
     const string subMenu[] = {"Generate Score Report", "Display Overall Letter Grade", "Sign out"};
     bool isLoggedIn = false;
+    string loggedInUsername = "";
     bool isProgramOpen = true;
     bool isSignedOut = false;
     while (isProgramOpen)
@@ -47,9 +48,8 @@ int main()
 
         switch (choice)
         {
-        case 1:
+        case 1: // done
         {
-            // TODO:
             // generate fake usernames + passwords
 
             cout << "Generating profiles" << endl;
@@ -141,7 +141,7 @@ int main()
 
             break;
         }
-        case 2:
+        case 2: // TODO
         {
             // TODO:
             // Ask user to select a data set either the fake data or the given data
@@ -153,32 +153,58 @@ int main()
             // scores.txt
             break;
         }
-        case 3:
+        case 3: // done
         {
-            string username;
-            string password;
+            for (int attempt = 0; attempt < 5; attempt++)
+            {
+                string username;
+                string password;
 
-            // Ask the user for username and password
-            cout << "Enter your username: " << endl;
-            cin >> username;
-            cout << "Enter your password: " << endl;
-            cin >> password;
+                cout << "Enter your username: " << endl;
+                cin >> username;
+                cout << "Enter your password: " << endl;
+                cin >> password;
 
+                ifstream in;
+                in.open("userdatabase.txt");
+
+                string fileUsername;
+                string filePassword;
+
+                while (in >> fileUsername >> filePassword)
+                {
+                    if (fileUsername == username && filePassword == password)
+                    {
+                        isLoggedIn = true;
+                        loggedInUsername = username;
+                        break;
+                    }
+                }
+                if (isLoggedIn == true)
+                {
+                    break;
+                }
+                else
+                {
+                    cout << "Invalid username or password. Attempts remaining: " << (4 - attempt) << endl;
+                }
+                in.close();
+            }
             break;
         }
-        case 4:
+        case 4: // not required
         {
             // ask for registration info
             // username and password only
             // NOT REQUIRED
             break;
         }
-        case 5:
+        case 5: // not required
         {
             // password reset
             break;
         }
-        case 6:
+        case 6: // done
         {
             // close the program
             isProgramOpen = false;
@@ -192,7 +218,7 @@ int main()
         {
             while (!isSignedOut)
             {
-                cout << "\nWelcome, " << "username" << endl;
+                cout << "\nWelcome, " << loggedInUsername << endl;
                 displayMenu(subMenu, 3);
                 cout << "Select: ";
                 cin >> choice;
@@ -200,8 +226,25 @@ int main()
                 {
                 case 1:
                 {
+                    //generate score report 
                     break;
                 }
+                case 2:
+                {
+                    //display overall letter grade 
+                }
+                case 3: 
+                {
+                    //sign out 
+                }
+                default:
+                {
+                    break;
+                }
+
+
+
+
                 }
             }
         }
