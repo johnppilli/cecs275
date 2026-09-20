@@ -50,7 +50,8 @@ int main()
         case 1:
         {
             // TODO:
-            // generateFakeData
+            // generate fake usernames + passwords
+
             cout << "Generating profiles" << endl;
 
             ofstream out;
@@ -66,6 +67,78 @@ int main()
                     << endl;
             }
             out.close();
+
+            cout << "Generating Scores" << endl;
+
+            ofstream scoreOut;
+            out.open("fakedata.txt");
+
+            // Max Scores Line beginning of code -- 2nd row
+            int maxScores[31];
+
+            out << setw(5) << "20" << setw(5) << "7" << setw(5) << "2"
+                << setw(5) << "1" << setw(5) << "1" << endl;
+
+            for (int i = 0; i < 20; i++) // loosp the max random scores
+            {
+                // generateRandomScores
+                string randomMaxLab = generateRandomScores(5, 20); // gives rnadom number
+                int randomMaxLabInt = stoi(randomMaxLab);          // converts
+
+                maxScores[i] = randomMaxLabInt; // stores i
+                out << setw(5) << randomMaxLab; // prints
+            }
+
+            for (int i = 0; i < 7; i++)
+            {
+                // generateRandom
+                string randomMaxQuiz = generateRandomScores(10, 15);
+                int randomMaxQuizInt = stoi(randomMaxQuiz);
+
+                maxScores[20 + i] = randomMaxQuizInt;
+                out << setw(5) << randomMaxQuiz;
+            }
+
+            for (int i = 0; i < 2; i++)
+            {
+                string randomMaxExam = generateRandomScores(40, 60);
+                int randomMaxExamInt = stoi(randomMaxExam);
+
+                maxScores[27 + i] = randomMaxExamInt;
+                out << setw(5) << randomMaxExam;
+            }
+
+            // Max Project Scores
+            string randomMaxProject = generateRandomScores(80, 100);
+            int randomMaxProjectInt = stoi(randomMaxProject);
+
+            maxScores[29] = randomMaxProjectInt;
+            out << setw(5) << randomMaxProject;
+
+            // Max Final Exam Scores
+            string randomMaxFinalExam = generateRandomScores(90, 110);
+            int randomMaxFinalExamInt = stoi(randomMaxFinalExam);
+
+            maxScores[30] = randomMaxFinalExamInt;
+            out << setw(5) << randomMaxFinalExam << endl;
+
+            // Max Scores Line done -- 2nd row
+
+            // Start of Code for each students scores
+            // for loop running 100 times, inside for loop for each score
+
+            for (int i = 0; i < 100; i++)
+            {
+                for (int j = 0; j < 31; j++)
+                {
+                    string studentScores = generateRandomScores(0, maxScores[j]);
+                    out << setw(5) << studentScores;
+                }
+                out << endl;
+            }
+
+            scoreOut.close();
+
             break;
         }
         case 2:

@@ -83,7 +83,6 @@ string randomCapitalLetter()
 
     return uppercaseletter;
 }
-
 /*
  *
  * Used for both an assignment's max scores and the students max score;
@@ -91,7 +90,10 @@ string randomCapitalLetter()
  * the assignment is worth, (assignment can't be worth 0 points)
  *
  *
+ */
 string generateRandomScores(int min, int max)
 {
+    string randomScore = randomNumberInRange(min, max);
+
+    return randomScore;
 }
-*/
