@@ -11,6 +11,8 @@
 #include <string>
 #include <random>
 #include <cctype>
+#include <iostream> 
+
 
 using namespace std;
 
@@ -132,3 +134,20 @@ char lettergrade(double totalPercentage)
         return 'F';
     }
 }
+
+
+void printCategoryScores(string label, int scores[], int startIndex, int count)
+{
+    cout << label << ": ";
+    for (int i = startIndex; i < startIndex + count; i++)
+    {
+        cout << scores[i] << " ";
+    }
+    cout << endl;
+}
+
+
+
+
+
+

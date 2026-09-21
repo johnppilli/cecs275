@@ -34,7 +34,7 @@ int main()
 
     const int MAIN_MENU_SIZE = 6;
     const string mainMenu[MAIN_MENU_SIZE] = {"Generate Fake Data", "Select Data Sets", "Log In", "Forget Password", "Register", "Exit"};
-    const string subMenu[] = {"Generate Score Report", "Display Overall Letter Grade", "Sign out"};
+    const string subMenu[] = {"Generate Score Report", "Sign out"};
     bool isLoggedIn = false;
     string loggedInUsername = "";
     bool isProgramOpen = true;
@@ -61,8 +61,6 @@ int main()
 
             ofstream out;
             out.open("userdatabase.txt"); // open database
-
-            out << setw(15) << "Username" << setw(15) << "Password" << endl; // formatting
 
             for (int i = 0; i < 100; i++)
             {
@@ -205,8 +203,6 @@ int main()
                 string fileUsername;
                 string filePassword;
 
-                in >> fileUsername >> filePassword; // skip the header
-
                 while (in >> fileUsername >> filePassword)
                 {
                     rowCounter++; // count only actual student rows
@@ -257,7 +253,7 @@ int main()
             while (!isSignedOut)
             {
                 cout << "\nWelcome, " << loggedInUsername << endl;
-                displayMenu(subMenu, 3);
+                displayMenu(subMenu, 2);
                 cout << "Select: ";
                 cin >> choice;
                 switch (choice)
@@ -331,39 +327,11 @@ int main()
                     cout << "Username: " << loggedInUsername << endl;
                     cout << "These are your scores: " << endl;
 
-                    cout << "Labs: ";
-                    for (int i = 0; i < 20; i++)
-                    {
-                        cout << studentScores[i] << " ";
-                    }
-                    cout << endl;
-
-                    cout << "Quizzes: ";
-                    for (int i = 20; i < 27; i++)
-                    {
-                        cout << studentScores[i] << " ";
-                    }
-                    cout << endl;
-
-                    cout << "Exams: ";
-                    for (int i = 27; i < 29; i++)
-                    {
-                        cout << studentScores[i] << " ";
-                    }
-                    cout << endl;
-
-                    cout << "Projects: ";
-                    for (int i = 29; i < 30; i++)
-                    {
-                        cout << studentScores[i] << " ";
-                    }
-                    cout << endl;
-
-                    cout << "Final Exam: ";
-                    for (int i = 30; i < 31; i++)
-                    {
-                        cout << studentScores[i] << " ";
-                    }
+                    printCategoryScores("Labs", studentScores, 0, 20);
+                    printCategoryScores("Quizzes", studentScores, 20, 7);
+                    printCategoryScores("Exams", studentScores, 27, 2);
+                    printCategoryScores("Project", studentScores, 29, 1);
+                    printCategoryScores("Final Exam", studentScores, 30, 1);
 
                     cout << endl;
 
@@ -377,12 +345,8 @@ int main()
                 }
                 case 2:
                 {
-                    // display overall letter grade
-                    cout << "This is your overall letter grade: " << endl;
-                }
-                case 3:
-                {
                     // sign out
+                    cout << "Sign Out" << endl;
                 }
                 default:
                 {

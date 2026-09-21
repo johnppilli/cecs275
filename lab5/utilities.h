@@ -23,4 +23,6 @@ double sumCategoryPercentages(int studentScores[], int maxScores[], int startInd
 
 char lettergrade(double totalPercentage);
 
+void printCategoryScores(std::string label, int scores[], int startIndex, int count);
+
 #endif
