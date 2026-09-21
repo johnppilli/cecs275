@@ -345,15 +345,19 @@ int main()
                 }
                 case 2:
                 {
-                    // sign out
                     cout << "Sign Out" << endl;
+                    isSignedOut = true;
+                    isLoggedIn = false;
+                    break;
                 }
+
                 default:
                 {
                     break;
                 }
                 }
             }
+            isSignedOut = false;
         }
     }
 
