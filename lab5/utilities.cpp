@@ -97,3 +97,38 @@ string generateRandomScores(int min, int max)
 
     return randomScore;
 }
+
+double sumCategoryPercentages(int studentScores[], int maxScores[], int startIndex, int count)
+{
+
+    double PercentSum = 0;
+    for (int i = startIndex; i < startIndex + count; i++)
+    {
+        PercentSum = PercentSum + (((double)studentScores[i] / maxScores[i]) * 100); // converts the answer to be in a double(with dcimal)
+    }
+    return PercentSum;
+}
+
+char lettergrade(double totalPercentage)
+{
+    if (totalPercentage >= 90)
+    {
+        return 'A';
+    }
+    else if (totalPercentage >= 80 && totalPercentage <= 89.99)
+    {
+        return 'B';
+    }
+    else if (totalPercentage >= 70 && totalPercentage <= 79.99)
+    {
+        return 'C';
+    }
+    else if (totalPercentage >= 60 && totalPercentage <= 69.99)
+    {
+        return 'D';
+    }
+    else
+    {
+        return 'F';
+    }
+}

@@ -39,6 +39,11 @@ int main()
     string loggedInUsername = "";
     bool isProgramOpen = true;
     bool isSignedOut = false;
+    int maxScores[31];
+    string loginFile;
+    string scoresFile;
+    int loggedInRowIndex;
+
     while (isProgramOpen)
     {
         displayMenu(mainMenu, MAIN_MENU_SIZE);
@@ -74,7 +79,6 @@ int main()
             out.open("fakedata.txt");
 
             // Max Scores Line beginning of code -- 2nd row
-            int maxScores[31];
 
             out << setw(5) << "20" << setw(5) << "7" << setw(5) << "2"
                 << setw(5) << "1" << setw(5) << "1" << endl;
@@ -151,6 +155,35 @@ int main()
             // OR
             // users.txt
             // scores.txt
+
+            int choice;
+
+            cout << "1. Fake Data" << endl;
+            cout << "2. Given Data" << endl;
+
+            cin >> choice;
+
+            switch (choice)
+            {
+            case 1:
+            {
+                // fake data
+                loginFile = "userdatabase.txt";
+                scoresFile = "fakedata.txt";
+                break;
+            }
+            case 2:
+            {
+                // given data
+                loginFile = "users.txt";
+                scoresFile = "scores.txt";
+                break;
+            }
+            default:
+            {
+                break;
+            }
+            }
             break;
         }
         case 3: // done
@@ -160,23 +193,27 @@ int main()
                 string username;
                 string password;
 
+                int rowCounter = 0; // initalize local counter to keep track of rows
+
                 cout << "Enter your username: " << endl;
                 cin >> username;
                 cout << "Enter your password: " << endl;
                 cin >> password;
 
                 ifstream in;
-                in.open("userdatabase.txt");
+                in.open(loginFile);
 
                 string fileUsername;
                 string filePassword;
 
                 while (in >> fileUsername >> filePassword)
                 {
+                    rowCounter++; // increment every tiem
                     if (fileUsername == username && filePassword == password)
                     {
                         isLoggedIn = true;
                         loggedInUsername = username;
+                        loggedInRowIndex = rowCounter; // set equal to the global variable so it keeps track
                         break;
                     }
                 }
@@ -226,25 +263,86 @@ int main()
                 {
                 case 1:
                 {
-                    //generate score report 
+                    // generate score report
+                    ifstream in;
+                    in.open(scoresFile);
+
+                    int throwaway;
+
+                    // throwaway first 5 values (the assignments)
+                    for (int i = 0; i < 5; i++)
+                    {
+                        in >> throwaway;
+                    }
+
+                    // read the values from scoresFile into maxScores array
+                    for (int i = 0; i < 31; i++)
+                    {
+                        in >> maxScores[i];
+                    }
+
+                    // skip loop, throws away loggedInRowIndex - 1 full rows
+                    // this navigates past all the rows that come before the target row
+                    for (int i = 0; i < loggedInRowIndex - 1; i++)
+                    {
+                        for (int j = 0; j < 31; j++)
+                        {
+                            in >> throwaway;
+                        }
+                    }
+
+                    // capture loop (reads the actual target row into a new array)
+                    // takes the actual row you need and reads them into the studentscores
+                    int studentScores[31];
+                    for (int j = 0; j < 31; j++)
+                    {
+                        in >> studentScores[j];
+                    }
+
+                    in.close();
+
+                    // call sumcategorypercentags 5 idff times for each assignmnets
+
+                    double labSum = sumCategoryPercentages(studentScores, maxScores, 0, 20);
+                    double quizSum = sumCategoryPercentages(studentScores, maxScores, 20, 7);
+                    double examSum = sumCategoryPercentages(studentScores, maxScores, 27, 2);
+                    double projectSum = sumCategoryPercentages(studentScores, maxScores, 29, 1);
+                    double finalexamSum = sumCategoryPercentages(studentScores, maxScores, 30, 1);
+
+                    double avglab = labSum / 20;
+                    double avgquiz = quizSum / 7;
+                    double avgexam = examSum / 2;
+                    double avgproject = projectSum / 1;
+                    double avgfinalexam = finalexamSum / 1;
+
+                    double labpercentage = avglab * 0.15;
+                    double quizpercentage = avgquiz * 0.15;
+                    double exampercentage = avgexam * 0.40;
+                    double projectpercentage = avgproject * 0.10;
+                    double finalexampercentage = avgfinalexam * 0.20;
+
+                    double totalPercentage = labpercentage + quizpercentage + exampercentage + projectpercentage + finalexampercentage;
+
+                    // cout everythign
+
+                    char finallettergrade = lettergrade(totalPercentage);
+
+                    cout << "This is your final letter grade: " << finallettergrade << endl;
+
                     break;
                 }
                 case 2:
                 {
-                    //display overall letter grade 
+                    // display overall letter grade
                 }
-                case 3: 
+                case 3:
                 {
-                    //sign out 
+                    // sign out
                 }
                 default:
                 {
                     break;
                 }
-
-
-
-
                 }
             }
         }

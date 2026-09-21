@@ -19,4 +19,8 @@ std::string randomCapitalLetter();
 
 std::string randomLowerCaseLetter();
 
+double sumCategoryPercentages(int studentScores[], int maxScores[], int startIndex, int count);
+
+char lettergrade(double totalPercentage);
+
 #endif
