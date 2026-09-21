@@ -63,7 +63,6 @@ int main()
             out.open("userdatabase.txt"); // open database
 
             out << setw(15) << "Username" << setw(15) << "Password" << endl; // formatting
-            out << setw(15) << "JohnDoe123" << setw(15) << "John123" << endl;
 
             for (int i = 0; i < 100; i++)
             {
@@ -193,7 +192,7 @@ int main()
                 string username;
                 string password;
 
-                int rowCounter = 0; // initalize local counter to keep track of rows
+                int rowCounter = 0; // initialize local counter to keep track of score rows
 
                 cout << "Enter your username: " << endl;
                 cin >> username;
@@ -206,9 +205,11 @@ int main()
                 string fileUsername;
                 string filePassword;
 
+                in >> fileUsername >> filePassword; // skip the header
+
                 while (in >> fileUsername >> filePassword)
                 {
-                    rowCounter++; // increment every tiem
+                    rowCounter++; // count only actual student rows
                     if (fileUsername == username && filePassword == password)
                     {
                         isLoggedIn = true;
@@ -327,6 +328,49 @@ int main()
 
                     char finallettergrade = lettergrade(totalPercentage);
 
+                    cout << "Username: " << loggedInUsername << endl;
+                    cout << "These are your scores: " << endl;
+
+                    cout << "Labs: ";
+                    for (int i = 0; i < 20; i++)
+                    {
+                        cout << studentScores[i] << " ";
+                    }
+                    cout << endl;
+
+                    cout << "Quizzes: ";
+                    for (int i = 20; i < 27; i++)
+                    {
+                        cout << studentScores[i] << " ";
+                    }
+                    cout << endl;
+
+                    cout << "Exams: ";
+                    for (int i = 27; i < 29; i++)
+                    {
+                        cout << studentScores[i] << " ";
+                    }
+                    cout << endl;
+
+                    cout << "Projects: ";
+                    for (int i = 29; i < 30; i++)
+                    {
+                        cout << studentScores[i] << " ";
+                    }
+                    cout << endl;
+
+                    cout << "Final Exam: ";
+                    for (int i = 30; i < 31; i++)
+                    {
+                        cout << studentScores[i] << " ";
+                    }
+
+                    cout << endl;
+
+                    cout << fixed << setprecision(2);
+                    cout << "This is your percentage earned for each category: " << avglab << " " << avgquiz << " " << avgexam << " " << avgproject << " " << avgfinalexam << endl;
+                    cout << "This is your weighted percentage for each category: " << labpercentage << " " << quizpercentage << " " << exampercentage << " " << projectpercentage << " " << finalexampercentage << endl;
+                    cout << "This your total final percentage: " << totalPercentage << endl;
                     cout << "This is your final letter grade: " << finallettergrade << endl;
 
                     break;
@@ -334,6 +378,7 @@ int main()
                 case 2:
                 {
                     // display overall letter grade
+                    cout << "This is your overall letter grade: " << endl;
                 }
                 case 3:
                 {
