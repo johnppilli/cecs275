@@ -4,7 +4,7 @@
  * @author Oswaldo Castaneda
  * @version 0.0.0
  *
- * Last updated: 09/17/26
+ * Last updated: 09/21/26
  *
  */
 
@@ -60,7 +60,7 @@ int main()
             cout << "Generating profiles" << endl;
 
             ofstream out;
-            out.open("userdatabase.txt"); // open database
+            out.open("fake_users.txt"); // open database
 
             for (int i = 0; i < 100; i++)
             {
@@ -73,7 +73,7 @@ int main()
             cout << "Generating Scores" << endl;
 
             ofstream scoreOut;
-            out.open("fakedata.txt");
+            out.open("fake_scores.txt");
 
             // Max Scores Line beginning of code -- 2nd row
 
@@ -165,15 +165,28 @@ int main()
             case 1:
             {
                 // fake data
-                loginFile = "userdatabase.txt";
-                scoresFile = "fakedata.txt";
+                loginFile = "fake_users.txt";
+                scoresFile = "fake_scores.txt";
                 break;
             }
             case 2:
             {
                 // given data
-                loginFile = "users.txt";
-                scoresFile = "scores.txt";
+                cout << "Enter the users file name: " << endl;
+                cin >> loginFile;
+                while (!fileExists(loginFile))
+                {
+                    cout << "File not found. Enter the users file name: " << endl;
+                    cin >> loginFile;
+                }
+
+                cout << "Enter the scores file name: " << endl;
+                cin >> scoresFile;
+                while (!fileExists(scoresFile))
+                {
+                    cout << "File not found. Enter the scores file name: " << endl;
+                    cin >> scoresFile;
+                }
                 break;
             }
             default:

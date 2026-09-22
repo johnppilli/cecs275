@@ -1,21 +1,25 @@
-/*
+/**
+ * utilities.cpp
+ * Implementation file for utilities.h. Contains the random data generators
+ * for the fake users/scores files, the percentage and letter-grade
+ * calculations for the score report, and small file/output helpers.
+ * See utilities.h for the full description of each function.
  *
- *
- *
- *
- *
- *
+ * @author John Pilli
+ * @author Oswaldo Castaneda
+ * @version 0.0.0
  */
 
 #include "utilities.h"
 #include <string>
 #include <random>
 #include <cctype>
-#include <iostream> 
-
+#include <iostream>
+#include <fstream>
 
 using namespace std;
 
+// Builds a random lowercase string with the given number of letters.
 string randomWord(int length)
 {
     string word = "";
@@ -26,15 +30,13 @@ string randomWord(int length)
     return word;
 }
 
+// Returns a random whole number from lowerBound to upperBound (inclusive) as a string.
 string randomNumberInRange(int lowerBound, int upperBound)
 {
     return to_string(lowerBound + rand() % (upperBound - lowerBound + 1));
 }
 
-/*
- *
- *
- */
+// Fake username: random 6-12 letter word plus a random number from 1 to 99.
 string generateRandomUsername()
 {
     string randomLength = randomNumberInRange(6, 12); // random length between 6-12 for username
@@ -46,6 +48,7 @@ string generateRandomUsername()
     return username + numberPart;
 }
 
+// Fake 12-character password: digit + lowercase + uppercase, repeated 4 times.
 string generateRandomPassword()
 {
     // generate one by one: lowercase, uppercase number
@@ -68,6 +71,8 @@ string generateRandomPassword()
 
     return firstnumber1 + lowerletter1 + upperletter1 + firstnumber2 + lowerletter2 + upperletter2 + firstnumber3 + lowerletter3 + upperletter3 + firstnumber4 + lowerletter4 + upperletter4;
 }
+
+// Returns one random lowercase letter, picked from an alphabet array.
 string randomLowerCaseLetter()
 {
     char loweralphabet[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
@@ -77,6 +82,7 @@ string randomLowerCaseLetter()
     return lowercaseletter;
 }
 
+// Returns one random uppercase letter, picked from an alphabet array.
 string randomCapitalLetter()
 {
     char upperalphabet[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
@@ -85,14 +91,8 @@ string randomCapitalLetter()
 
     return uppercaseletter;
 }
-/*
- *
- * Used for both an assignment's max scores and the students max score;
- * you would just keep the max same for the both uses but change the minimum to whatever the
- * the assignment is worth, (assignment can't be worth 0 points)
- *
- *
- */
+
+// Random score between min and max; used for both max scores and student scores.
 string generateRandomScores(int min, int max)
 {
     string randomScore = randomNumberInRange(min, max);
@@ -100,6 +100,7 @@ string generateRandomScores(int min, int max)
     return randomScore;
 }
 
+// Sums (score / max * 100) for each assignment in one category's index range.
 double sumCategoryPercentages(int studentScores[], int maxScores[], int startIndex, int count)
 {
 
@@ -111,6 +112,7 @@ double sumCategoryPercentages(int studentScores[], int maxScores[], int startInd
     return PercentSum;
 }
 
+// Converts a final percentage to a letter grade (A/B/C/D/F).
 char lettergrade(double totalPercentage)
 {
     if (totalPercentage >= 90)
@@ -135,7 +137,7 @@ char lettergrade(double totalPercentage)
     }
 }
 
-
+// Prints a category label followed by that category's scores on one line.
 void printCategoryScores(string label, int scores[], int startIndex, int count)
 {
     cout << label << ": ";
@@ -146,8 +148,9 @@ void printCategoryScores(string label, int scores[], int startIndex, int count)
     cout << endl;
 }
 
-
-
-
-
-
+// Returns true if the named file can be opened for reading.
+bool fileExists(string fileName)
+{
+    ifstream file(fileName);
+    return file.is_open();
+}
