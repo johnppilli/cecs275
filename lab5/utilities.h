@@ -103,4 +103,22 @@ void printCategoryScores(std::string label, int scores[], int startIndex, int co
  */
 bool fileExists(std::string fileName);
 
+/**
+ * This function generates the fake data files. It writes fake_users.txt
+ * (100 random username/password pairs) and fake_scores.txt (the counts row,
+ * the max-scores row, then 100 students' randomly generated scores).
+ */
+void generateFakeData();
+
+/**
+ * This function prints the score report for the logged-in student. It reads the
+ * max-scores row and the student's own row from the scores file, then displays the
+ * username, scores by category, percentage earned, weighted contribution,
+ * total final percentage and final letter grade (percentages to two decimals).
+ * @param scoresFile        the scores file to read from
+ * @param loggedInRowIndex  the logged-in student's position in the users file (1 = first user)
+ * @param loggedInUsername  the username to show on the report
+ */
+void generateScoreReport(std::string scoresFile, int loggedInRowIndex, std::string loggedInUsername);
+
 #endif
