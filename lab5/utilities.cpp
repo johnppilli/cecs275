@@ -138,13 +138,12 @@ char lettergrade(double totalPercentage)
     }
 }
 
-// Prints a category label followed by that category's scores on one line.
+// Prints each score in a category on its own numbered label, e.g. "Lab 1: 5  Lab 2: 1".
 void printCategoryScores(string label, int scores[], int startIndex, int count)
 {
-    cout << label << ": ";
-    for (int i = startIndex; i < startIndex + count; i++)
+    for (int i = 0; i < count; i++)
     {
-        cout << scores[i] << " ";
+        cout << label << " " << (i + 1) << ": " << scores[startIndex + i] << "  ";
     }
     cout << endl;
 }
@@ -293,18 +292,21 @@ void generateScoreReport(string scoresFile, int loggedInRowIndex, string loggedI
 
     cout << "Username: " << loggedInUsername << endl;
     cout << "These are your scores: " << endl;
+    
 
-    printCategoryScores("Labs", studentScores, 0, 20);
-    printCategoryScores("Quizzes", studentScores, 20, 7);
-    printCategoryScores("Exams", studentScores, 27, 2);
+
+    
+    printCategoryScores("Lab", studentScores, 0, 20);
+    printCategoryScores("Quiz", studentScores, 20, 7);
+    printCategoryScores("Exam", studentScores, 27, 2);
     printCategoryScores("Project", studentScores, 29, 1);
     printCategoryScores("Final Exam", studentScores, 30, 1);
 
     cout << endl;
 
     cout << fixed << setprecision(2);
-    cout << "This is your percentage earned for each category: " << avglab << " " << avgquiz << " " << avgexam << " " << avgproject << " " << avgfinalexam << endl;
-    cout << "This is your weighted percentage for each category: " << labpercentage << " " << quizpercentage << " " << exampercentage << " " << projectpercentage << " " << finalexampercentage << endl;
-    cout << "This your total final percentage: " << totalPercentage << endl;
+    cout << "This is your percentage earned for each category: " << "Labs: " << avglab << "% " << "Quiz: " << avgquiz << "% " << "Exam: " << avgexam << "% " << "Project: " << avgproject << "% " << "Final: " << avgfinalexam << "%" << endl;
+    cout << "This is your weighted percentage for each category: " << "Labs: " << labpercentage << "% " << "Quiz: " << quizpercentage << "% " << "Exam: " << exampercentage << "% " << "Project: " << projectpercentage << "% " << "Final: " << finalexampercentage << "%" << endl;
+    cout << "This your total final percentage: " << totalPercentage << "%" << endl;
     cout << "This is your final letter grade: " << finallettergrade << endl;
 }
