@@ -303,27 +303,37 @@ void generateScoreReport(string scoresFile, int loggedInRowIndex, string loggedI
 
     in.close();
 
-    // call sumcategorypercentags 5 idff times for each assignmnets
+    // start index of each category = sum of the counts before it
+    int examStart = numLabs + numQuizzes;
+    int projectStart = examStart + numExams;
+    int finalStart = projectStart + numProjects;
 
-    double labSum = sumCategoryPercentages(studentScores, maxScores, 0, 20);
-    double quizSum = sumCategoryPercentages(studentScores, maxScores, 20, 7);
-    double examSum = sumCategoryPercentages(studentScores, maxScores, 27, 2);
-    double projectSum = sumCategoryPercentages(studentScores, maxScores, 29, 1);
-    double finalexamSum = sumCategoryPercentages(studentScores, maxScores, 30, 1);
+    // exam split into 2 separate 20% categories instead of 1 merged 40%
+    double labSum = sumCategoryPercentages(studentScores, maxScores, 0, numLabs);
+    double quizSum = sumCategoryPercentages(studentScores, maxScores, numLabs, numQuizzes);
+    double exam1Sum = sumCategoryPercentages(studentScores, maxScores, examStart, 1);
+    double exam2Sum = sumCategoryPercentages(studentScores, maxScores, examStart + 1, 1);
+    double projectSum = sumCategoryPercentages(studentScores, maxScores, projectStart, numProjects);
+    double finalexamSum = sumCategoryPercentages(studentScores, maxScores, finalStart, numFinal);
 
-    double avglab = labSum / 20;
-    double avgquiz = quizSum / 7;
-    double avgexam = examSum / 2;
-    double avgproject = projectSum / 1;
-    double avgfinalexam = finalexamSum / 1;
+    // sum / count = average percentage for the category
+    double avglab = labSum / numLabs;
+    double avgquiz = quizSum / numQuizzes;
+    double avgexam1 = exam1Sum / 1;
+    double avgexam2 = exam2Sum / 1;
+    double avgproject = projectSum / numProjects;
+    double avgfinalexam = finalexamSum / numFinal;
 
+    // apply each category's weight
     double labpercentage = avglab * 0.15;
     double quizpercentage = avgquiz * 0.15;
-    double exampercentage = avgexam * 0.40;
+    double exam1percentage = avgexam1 * 0.20;
+    double exam2percentage = avgexam2 * 0.20;
     double projectpercentage = avgproject * 0.10;
     double finalexampercentage = avgfinalexam * 0.20;
 
-    double totalPercentage = labpercentage + quizpercentage + exampercentage + projectpercentage + finalexampercentage;
+    // add up all weighted contributions = final grade percentage
+    double totalPercentage = labpercentage + quizpercentage + exam1percentage + exam2percentage + projectpercentage + finalexampercentage;
 
     // cout everythign
 
@@ -332,17 +342,18 @@ void generateScoreReport(string scoresFile, int loggedInRowIndex, string loggedI
     cout << "Username: " << loggedInUsername << endl;
     cout << "These are your scores: " << endl;
 
-    printCategoryScores("Lab", studentScores, 0, 20);
-    printCategoryScores("Quiz", studentScores, 20, 7);
-    printCategoryScores("Exam", studentScores, 27, 2);
-    printCategoryScores("Project", studentScores, 29, 1);
-    printCategoryScores("Final Exam", studentScores, 30, 1);
+    printCategoryScores("Lab", studentScores, 0, numLabs);
+    printCategoryScores("Quiz", studentScores, numLabs, numQuizzes);
+    printCategoryScores("Exam 1", studentScores, examStart, 1);
+    printCategoryScores("Exam 2", studentScores, examStart + 1, 1);
+    printCategoryScores("Project", studentScores, projectStart, numProjects);
+    printCategoryScores("Final Exam", studentScores, finalStart, numFinal);
 
     cout << endl;
 
     cout << fixed << setprecision(2);
-    cout << "This is your percentage earned for each category: " << "Labs: " << avglab << "% " << "Quiz: " << avgquiz << "% " << "Exam: " << avgexam << "% " << "Project: " << avgproject << "% " << "Final: " << avgfinalexam << "%" << endl;
-    cout << "This is your weighted percentage for each category: " << "Labs: " << labpercentage << "% " << "Quiz: " << quizpercentage << "% " << "Exam: " << exampercentage << "% " << "Project: " << projectpercentage << "% " << "Final: " << finalexampercentage << "%" << endl;
+    cout << "This is your percentage earned for each category: " << "Labs: " << avglab << "% " << "Quiz: " << avgquiz << "% " << "Exam 1: " << avgexam1 << "% " << "Exam 2: " << avgexam2 << "% " << "Project: " << avgproject << "% " << "Final: " << avgfinalexam << "%" << endl;
+    cout << "This is your weighted percentage for each category: " << "Labs: " << labpercentage << "% " << "Quiz: " << quizpercentage << "% " << "Exam 1: " << exam1percentage << "% " << "Exam 2: " << exam2percentage << "% " << "Project: " << projectpercentage << "% " << "Final: " << finalexampercentage << "%" << endl;
     cout << "This your total final percentage: " << totalPercentage << "%" << endl;
     cout << "This is your final letter grade: " << finallettergrade << endl;
 }
