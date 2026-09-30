@@ -35,7 +35,7 @@ int main()
 
     const int MAIN_MENU_SIZE = 4;
     const string mainMenu[MAIN_MENU_SIZE] = {"Generate Fake Data", "Select Data Sets", "Log In", "Exit"};
-    const string subMenu[] = {"Generate Score Report", "Sign out"};
+    const string subMenu[] = {"Generate Score Report", "Sign out"}; //TODO, add the 4 options (Generate full report or short summary), compare class analytics 
     bool isLoggedIn = false;
     string loggedInUsername = "";
     bool isProgramOpen = true;
@@ -171,7 +171,7 @@ int main()
             while (!isSignedOut)
             {
                 cout << "\nWelcome, " << loggedInUsername << endl;
-                displayMenu(subMenu, 2);
+                displayMenu(subMenu, 2); //TODO: Change to 4 options in the menu? 
                 cout << "Select: ";
                 cin >> choice;
                 switch (choice)

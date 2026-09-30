@@ -18,6 +18,7 @@
 #include <fstream>
 #include <iomanip>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -115,7 +116,7 @@ double sumCategoryPercentages(int studentScores[], int maxScores[], int startInd
 }
 
 // Converts a final percentage to a letter grade (A/B/C/D/F).
-string lettergrade(double totalPercentage) // change to a string?
+string lettergrade(double totalPercentage) //  this should be good enoguh
 {
     if (totalPercentage >= 97)
     {
@@ -208,49 +209,51 @@ void generateFakeData()
 
     out.open("fake_scores.txt");
 
-    int maxScores[31];
+    int numLabs = stoi(randomNumberInRange(15, 25)); // non-hardcoded num of labs and quizzes
+    int numQuizzes = stoi(randomNumberInRange(5, 10));
+    int numExams = 2;
+    int numProjects = 1;
+    int numFinal = 1;
+    int total = numLabs + numQuizzes + numExams + numProjects + numFinal;
 
-    // Row 1: number of items in each category
-    out << setw(5) << "20" << setw(5) << "7" << setw(5) << "2" // CHANGE FROM HARDCODED CODE
-        << setw(5) << "1" << setw(5) << "1" << endl;           // Mabye dedclare each as a variable, allow that variable to be a gneeraterandomnumber between like
-    // Labs: 10-15, Quiz: 5-7, Exam: 2-3, Final: 1, Project 1 (Maybe 2) and have it vary?
-    // then declare that variable donw below in everything else
-    // Make sure that all things are reasonable in points
+    vector<int> maxScores(total);
 
-    // Row 2: maximum possible score of each assignment
-    for (int i = 0; i < 20; i++) // labs
+    out << setw(5) << numLabs << setw(5) << numQuizzes << setw(5) << numExams
+        << setw(5) << numProjects << setw(5) << numFinal << endl;
+
+    for (int i = 0; i < numLabs; i++) // labs
     {
         string randomMaxLab = generateRandomScores(5, 20);
         maxScores[i] = stoi(randomMaxLab);
         out << setw(5) << randomMaxLab;
     }
 
-    for (int i = 0; i < 7; i++) // quizzes
+    for (int i = 0; i < numQuizzes; i++) // quizzes
     {
         string randomMaxQuiz = generateRandomScores(10, 15);
-        maxScores[20 + i] = stoi(randomMaxQuiz);
+        maxScores[numLabs + i] = stoi(randomMaxQuiz);
         out << setw(5) << randomMaxQuiz;
     }
 
-    for (int i = 0; i < 2; i++) // exams
+    for (int i = 0; i < numExams; i++) // exams
     {
         string randomMaxExam = generateRandomScores(40, 60);
-        maxScores[27 + i] = stoi(randomMaxExam);
+        maxScores[numLabs + numQuizzes + i] = stoi(randomMaxExam);
         out << setw(5) << randomMaxExam;
     }
 
     string randomMaxProject = generateRandomScores(80, 100); // project
-    maxScores[29] = stoi(randomMaxProject);
+    maxScores[numLabs + numQuizzes + numExams] = stoi(randomMaxProject);
     out << setw(5) << randomMaxProject;
 
     string randomMaxFinalExam = generateRandomScores(90, 110); // final exam
-    maxScores[30] = stoi(randomMaxFinalExam);
+    maxScores[numLabs + numQuizzes + numExams + numProjects] = stoi(randomMaxFinalExam);
     out << setw(5) << randomMaxFinalExam << endl;
 
     // Rows 3+: each student's scores, from 0 up to that assignment's maximum
     for (int i = 0; i < 100; i++)
     {
-        for (int j = 0; j < 31; j++)
+        for (int j = 0; j < total; j++)
         {
             out << setw(5) << generateRandomScores(0, maxScores[j]);
         }
