@@ -104,7 +104,7 @@ string generateRandomScores(int min, int max)
 }
 
 // Sums (score / max * 100) for each assignment in one category's index range.
-double sumCategoryPercentages(int studentScores[], int maxScores[], int startIndex, int count)
+double sumCategoryPercentages(vector<int> &studentScores, vector<int> &maxScores, int startIndex, int count)
 {
 
     double PercentSum = 0;
@@ -173,7 +173,7 @@ string lettergrade(double totalPercentage) //  this should be good enoguh
 }
 
 // Prints each score in a category on its own numbered label, e.g. "Lab 1: 5  Lab 2: 1".
-void printCategoryScores(string label, int scores[], int startIndex, int count)
+void printCategoryScores(string label, vector<int> &scores, int startIndex, int count)
 {
     for (int i = 0; i < count; i++)
     {
@@ -265,29 +265,29 @@ void generateFakeData()
 // Reads the logged-in student's row from the scores file, then prints the formatted score report.
 void generateScoreReport(string scoresFile, int loggedInRowIndex, string loggedInUsername)
 {
-    int maxScores[31];
+    int numLabs;
+    int numQuizzes;
+    int numExams;
+    int numProjects;
+    int numFinal;
     ifstream in;
     in.open(scoresFile);
 
-    int throwaway;
+    in >> numLabs >> numQuizzes >> numExams >> numProjects >> numFinal;
+    int total = numLabs + numQuizzes + numExams + numProjects + numFinal;
 
-    // throwaway first 5 values (the assignments)
-    for (int i = 0; i < 5; i++)
-    {
-        in >> throwaway;
-    }
-
-    // read the values from scoresFile into maxScores array
-    for (int i = 0; i < 31; i++)
+    vector<int> maxScores(total);
+    for (int i = 0; i < total; i++)
     {
         in >> maxScores[i];
     }
 
     // skip loop, throws away loggedInRowIndex - 1 full rows
     // this navigates past all the rows that come before the target row
+    int throwaway;
     for (int i = 0; i < loggedInRowIndex - 1; i++)
     {
-        for (int j = 0; j < 31; j++)
+        for (int j = 0; j < total; j++)
         {
             in >> throwaway;
         }
@@ -295,8 +295,8 @@ void generateScoreReport(string scoresFile, int loggedInRowIndex, string loggedI
 
     // capture loop (reads the actual target row into a new array)
     // takes the actual row you need and reads them into the studentscores
-    int studentScores[31];
-    for (int j = 0; j < 31; j++)
+    vector<int> studentScores(total);
+    for (int j = 0; j < total; j++)
     {
         in >> studentScores[j];
     }

@@ -12,7 +12,7 @@
 
 #ifndef UTILITIES_H
 #define UTILITIES_H
-
+#include <vector>
 #include <string>
 
 /**
@@ -77,7 +77,7 @@ std::string randomLowerCaseLetter();
  * @param count         how many assignments are in the category
  * @return the sum of the individual assignment percentages
  */
-double sumCategoryPercentages(int studentScores[], int maxScores[], int startIndex, int count);
+double sumCategoryPercentages(std::vector<int> &studentScores, std::vector<int> &maxScores, int startIndex, int count);
 
 /**
  * This function converts a final percentage into a letter grade:
@@ -94,7 +94,7 @@ std::string lettergrade(double totalPercentage);
  * @param startIndex index of the category's first score
  * @param count      how many scores to print
  */
-void printCategoryScores(std::string label, int scores[], int startIndex, int count);
+void printCategoryScores(std::string label, std::vector<int> &scores, int startIndex, int count);
 
 /**
  * This function checks whether a file can be opened for reading.
