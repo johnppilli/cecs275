@@ -85,7 +85,7 @@ double sumCategoryPercentages(int studentScores[], int maxScores[], int startInd
  * @param totalPercentage the final weighted percentage
  * @return the letter grade ('A', 'B', 'C', 'D' or 'F')
  */
-char lettergrade(double totalPercentage);
+std::string lettergrade(double totalPercentage);
 
 /**
  * This function prints one category's scores on a single line, e.g. "Labs: 5 2 3 ...".

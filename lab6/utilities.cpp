@@ -17,6 +17,7 @@
 #include <iostream>
 #include <fstream>
 #include <iomanip>
+#include <string>
 
 using namespace std;
 
@@ -114,27 +115,59 @@ double sumCategoryPercentages(int studentScores[], int maxScores[], int startInd
 }
 
 // Converts a final percentage to a letter grade (A/B/C/D/F).
-char lettergrade(double totalPercentage)
+string lettergrade(double totalPercentage) // change to a string?
 {
-    if (totalPercentage >= 90)
+    if (totalPercentage >= 97)
     {
-        return 'A';
+        return "A+";
     }
-    else if (totalPercentage >= 80 && totalPercentage <= 89.99)
+    else if (totalPercentage >= 93 && totalPercentage <= 96)
     {
-        return 'B';
+        return "A";
     }
-    else if (totalPercentage >= 70 && totalPercentage <= 79.99)
+    else if (totalPercentage >= 90 && totalPercentage <= 92)
     {
-        return 'C';
+        return "A-";
     }
-    else if (totalPercentage >= 60 && totalPercentage <= 69.99)
+    else if (totalPercentage >= 87 && totalPercentage <= 89)
     {
-        return 'D';
+        return "B+";
+    }
+    else if (totalPercentage >= 83 && totalPercentage <= 86)
+    {
+        return "B";
+    }
+    else if (totalPercentage >= 80 && totalPercentage <= 82)
+    {
+        return "B-";
+    }
+    else if (totalPercentage >= 77 && totalPercentage <= 79)
+    {
+        return "C+";
+    }
+    else if (totalPercentage >= 73 && totalPercentage <= 76)
+    {
+        return "C";
+    }
+    else if (totalPercentage >= 70 && totalPercentage <= 72)
+    {
+        return "C-";
+    }
+    else if (totalPercentage >= 67 && totalPercentage <= 69)
+    {
+        return "D+";
+    }
+    else if (totalPercentage >= 63 && totalPercentage <= 66)
+    {
+        return "D";
+    }
+    else if (totalPercentage >= 60 && totalPercentage <= 62)
+    {
+        return "D-";
     }
     else
     {
-        return 'F';
+        return "F";
     }
 }
 
@@ -178,11 +211,11 @@ void generateFakeData()
     int maxScores[31];
 
     // Row 1: number of items in each category
-    out << setw(5) << "20" << setw(5) << "7" << setw(5) << "2" //CHANGE FROM HARDCODED CODE
-        << setw(5) << "1" << setw(5) << "1" << endl; //Mabye dedclare each as a variable, allow that variable to be a gneeraterandomnumber between like 
-        // Labs: 10-15, Quiz: 5-7, Exam: 2-3, Final: 1, Project 1 (Maybe 2) and have it vary?
-        // then declare that variable donw below in everything else 
-        //Make sure that all things are reasonable in points
+    out << setw(5) << "20" << setw(5) << "7" << setw(5) << "2" // CHANGE FROM HARDCODED CODE
+        << setw(5) << "1" << setw(5) << "1" << endl;           // Mabye dedclare each as a variable, allow that variable to be a gneeraterandomnumber between like
+    // Labs: 10-15, Quiz: 5-7, Exam: 2-3, Final: 1, Project 1 (Maybe 2) and have it vary?
+    // then declare that variable donw below in everything else
+    // Make sure that all things are reasonable in points
 
     // Row 2: maximum possible score of each assignment
     for (int i = 0; i < 20; i++) // labs
@@ -291,14 +324,11 @@ void generateScoreReport(string scoresFile, int loggedInRowIndex, string loggedI
 
     // cout everythign
 
-    char finallettergrade = lettergrade(totalPercentage);
+    string finallettergrade = lettergrade(totalPercentage);
 
     cout << "Username: " << loggedInUsername << endl;
     cout << "These are your scores: " << endl;
-    
 
-
-    
     printCategoryScores("Lab", studentScores, 0, 20);
     printCategoryScores("Quiz", studentScores, 20, 7);
     printCategoryScores("Exam", studentScores, 27, 2);
