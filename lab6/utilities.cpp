@@ -19,6 +19,7 @@
 #include <iomanip>
 #include <string>
 #include <vector>
+#include <sstream>
 
 using namespace std;
 
@@ -282,23 +283,23 @@ void generateScoreReport(string scoresFile, int loggedInRowIndex, string loggedI
         in >> maxScores[i];
     }
 
-    // skip loop, throws away loggedInRowIndex - 1 full rows
-    // this navigates past all the rows that come before the target row
-    int throwaway;
-    for (int i = 0; i < loggedInRowIndex - 1; i++)
+    string line;
+    vector<int> studentScores(total);
+
+    getline(in, line); // go through the rest of the max scores line
+
+    for (int i = 0; i < loggedInRowIndex; i++) // navigation, this just gets to whatever specific line you need
     {
-        for (int j = 0; j < total; j++)
-        {
-            in >> throwaway;
-        }
+        getline(in, line); // advances by one line each time,
     }
 
-    // capture loop (reads the actual target row into a new array)
-    // takes the actual row you need and reads them into the studentscores
-    vector<int> studentScores(total);
+    stringstream ss(line); // chekcs if the specific line has any values or not, if no values that it returns 0 for everything
     for (int j = 0; j < total; j++)
     {
-        in >> studentScores[j];
+        if (!(ss >> studentScores[j]))
+        {
+            studentScores[j] = 0; // line was blank
+        }
     }
 
     in.close();
