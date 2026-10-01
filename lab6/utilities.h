@@ -114,6 +114,28 @@ void printClassComparison(std::string scoresFile, double avgLab, double avgQuiz,
                            double avgExam2, double avgProject, double avgFinal);
 
 /**
+ * This function prints the full, detailed score report: per-assignment scores by category,
+ * percentage earned and weighted contribution per category, total final percentage, final
+ * letter grade, and the class average comparison.
+ */
+void printFullReport(std::string loggedInUsername, std::string scoresFile, std::vector<int> &studentScores,
+                      int numLabs, int numQuizzes, int examStart, int projectStart, int numProjects, int finalStart, int numFinal,
+                      double avglab, double avgquiz, double avgexam1, double avgexam2, double avgproject, double avgfinalexam,
+                      double labpercentage, double quizpercentage, double exam1percentage, double exam2percentage,
+                      double projectpercentage, double finalexampercentage,
+                      double totalPercentage, std::string finallettergrade);
+
+/**
+ * This function prints a condensed score summary: one line per category showing percentage
+ * earned, weight, and weighted contribution, plus the total final percentage and letter grade.
+ */
+void printShortReport(std::string loggedInUsername,
+                       double avglab, double avgquiz, double avgexam1, double avgexam2, double avgproject, double avgfinalexam,
+                       double labpercentage, double quizpercentage, double exam1percentage, double exam2percentage,
+                       double projectpercentage, double finalexampercentage,
+                       double totalPercentage, std::string finallettergrade);
+
+/**
  * This function converts a final percentage into a letter grade:
  * 90+ = A, 80-89.99 = B, 70-79.99 = C, 60-69.99 = D, below 60 = F.
  * @param totalPercentage the final weighted percentage
@@ -153,6 +175,6 @@ void generateFakeData();
  * @param loggedInRowIndex  the logged-in student's position in the users file (1 = first user)
  * @param loggedInUsername  the username to show on the report
  */
-void generateScoreReport(std::string scoresFile, int loggedInRowIndex, std::string loggedInUsername);
+void generateScoreReport(std::string scoresFile, int loggedInRowIndex, std::string loggedInUsername, bool isFullReport);
 
 #endif

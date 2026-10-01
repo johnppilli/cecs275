@@ -1,6 +1,6 @@
 /*
- * 
- * 
+ *
+ *
  * @author John Pilli
  * @author Oswaldo Castaneda
  * @version 0.0.0
@@ -35,7 +35,7 @@ int main()
 
     const int MAIN_MENU_SIZE = 4;
     const string mainMenu[MAIN_MENU_SIZE] = {"Generate Fake Data", "Select Data Sets", "Log In", "Exit"};
-    const string subMenu[] = {"Generate Score Report", "Sign out"}; //TODO, add the 4 options (Generate full report or short summary), compare class analytics 
+    const string subMenu[] = {"Generate Full Score Report", "Generate Short Score Report", "Sign out"}; // TODO, add the 4 options (Generate full report or short summary), compare class analytics
     bool isLoggedIn = false;
     string loggedInUsername = "";
     bool isProgramOpen = true;
@@ -171,26 +171,31 @@ int main()
             while (!isSignedOut)
             {
                 cout << "\nWelcome, " << loggedInUsername << endl;
-                displayMenu(subMenu, 2); //TODO: Change to 4 options in the menu? 
+                displayMenu(subMenu, 3); // TODO: Change to 4 options in the menu?
                 cout << "Select: ";
                 cin >> choice;
                 switch (choice)
                 {
                 case 1:
                 {
-                    // generate score report
-                    generateScoreReport(scoresFile, loggedInRowIndex, loggedInUsername);
-
+                    // TODO: Generate Full Score Report
+                    generateScoreReport(scoresFile, loggedInRowIndex, loggedInUsername, true);
                     break;
                 }
                 case 2:
                 {
+                    // TODO: Generate Short Score Report
+                    generateScoreReport(scoresFile, loggedInRowIndex, loggedInUsername, false);
+                }
+
+                case 3:
+                {
+                    // Sign out option
                     cout << "Sign Out" << endl;
                     isSignedOut = true;
                     isLoggedIn = false;
                     break;
                 }
-
                 default:
                 {
                     break;

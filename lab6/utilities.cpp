@@ -224,7 +224,7 @@ void computeClassAverages(string scoresFile, double &classLab, double &classQuiz
 
 // Prints the logged-in student's category averages next to the whole class's averages.
 void printClassComparison(string scoresFile, double avgLab, double avgQuiz, double avgExam1,
-                           double avgExam2, double avgProject, double avgFinal)
+                          double avgExam2, double avgProject, double avgFinal)
 {
     double classLab, classQuiz, classExam1, classExam2, classProject, classFinal;
     computeClassAverages(scoresFile, classLab, classQuiz, classExam1, classExam2, classProject, classFinal);
@@ -388,7 +388,7 @@ void generateFakeData()
 }
 
 // Reads the logged-in student's row from the scores file, then prints the formatted score report.
-void generateScoreReport(string scoresFile, int loggedInRowIndex, string loggedInUsername)
+void generateScoreReport(string scoresFile, int loggedInRowIndex, string loggedInUsername, bool isFullReport)
 {
     int numLabs;
     int numQuizzes;
@@ -448,10 +448,31 @@ void generateScoreReport(string scoresFile, int loggedInRowIndex, string loggedI
     // add up all weighted contributions = final grade percentage
     double totalPercentage = labpercentage + quizpercentage + exam1percentage + exam2percentage + projectpercentage + finalexampercentage;
 
-    // cout everythign
-
     string finallettergrade = lettergrade(totalPercentage);
 
+    // if else statement for print full report and short report
+    if (isFullReport)
+    {
+        printFullReport(loggedInUsername, scoresFile, studentScores, numLabs, numQuizzes, examStart, projectStart, numProjects, finalStart, numFinal,
+                        avglab, avgquiz, avgexam1, avgexam2, avgproject, avgfinalexam, labpercentage, quizpercentage, exam1percentage,
+                        exam2percentage, projectpercentage, finalexampercentage, totalPercentage, finallettergrade);
+    }
+    else
+    {
+        printShortReport(loggedInUsername, avglab, avgquiz, avgexam1, avgexam2, avgproject, avgfinalexam, labpercentage, quizpercentage,
+                         exam1percentage, exam2percentage, projectpercentage, finalexampercentage, totalPercentage, finallettergrade);
+    }
+}
+
+// Prints the full, detailed score report (per-assignment scores, percentages, weighted
+// contributions, total, letter grade, and the class comparison).
+void printFullReport(string loggedInUsername, string scoresFile, vector<int> &studentScores,
+                     int numLabs, int numQuizzes, int examStart, int projectStart, int numProjects, int finalStart, int numFinal,
+                     double avglab, double avgquiz, double avgexam1, double avgexam2, double avgproject, double avgfinalexam,
+                     double labpercentage, double quizpercentage, double exam1percentage, double exam2percentage,
+                     double projectpercentage, double finalexampercentage,
+                     double totalPercentage, string finallettergrade)
+{
     cout << "Username: " << loggedInUsername << endl;
     cout << "These are your scores: " << endl;
 
@@ -471,4 +492,28 @@ void generateScoreReport(string scoresFile, int loggedInRowIndex, string loggedI
     cout << "This is your final letter grade: " << finallettergrade << endl;
 
     printClassComparison(scoresFile, avglab, avgquiz, avgexam1, avgexam2, avgproject, avgfinalexam);
+}
+
+// Prints a condensed score summary (one line per category, total, and letter grade).
+void printShortReport(string loggedInUsername,
+                      double avglab, double avgquiz, double avgexam1, double avgexam2, double avgproject, double avgfinalexam,
+                      double labpercentage, double quizpercentage, double exam1percentage, double exam2percentage,
+                      double projectpercentage, double finalexampercentage,
+                      double totalPercentage, string finallettergrade)
+{
+    cout << fixed << setprecision(2);
+
+    cout << "Username: " << loggedInUsername << endl;
+
+    cout << "Labs: " << avglab << "%" << " " << "(15%)" << " -> " << labpercentage << "%" << endl;
+    cout << "Quiz: " << avgquiz << "%" << " " << "(15%)" << " -> " << quizpercentage << "%" << endl;
+    cout << "Exam 1: " << avgexam1 << "%" << " " << "(20%)" << " -> " << exam1percentage << "%" << endl;
+    cout << "Exam 2: " << avgexam2 << "%" << " " << "(20%)" << " -> " << exam2percentage << "%" << endl;
+    cout << "Project: " << avgproject << "%" << " " << "(10%)" << " -> " << projectpercentage << "%" << endl;
+    cout << "Final Exam: " << avgfinalexam << "%" << " " << "(20%)" << " -> " << finalexampercentage << "%" << endl;
+
+    cout << endl;
+
+    cout << "Final Percentage: " << totalPercentage << "%" << endl;
+    cout << "Letter Grade: " << finallettergrade << endl;
 }
