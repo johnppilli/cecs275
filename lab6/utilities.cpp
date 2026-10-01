@@ -116,6 +116,130 @@ double sumCategoryPercentages(vector<int> &studentScores, vector<int> &maxScores
     return PercentSum;
 }
 
+// Computes one student's average percentage in each of the 6 weighted categories.
+void computeCategoryAverages(vector<int> &studentScores, vector<int> &maxScores,
+                             int numLabs, int numQuizzes, int numExams, int numProjects, int numFinal,
+                             double &avgLab, double &avgQuiz, double &avgExam1, double &avgExam2,
+                             double &avgProject, double &avgFinal)
+{
+    // start index of each category = sum of the counts before it
+    int examStart = numLabs + numQuizzes;
+    int projectStart = examStart + numExams;
+    int finalStart = projectStart + numProjects;
+
+    // exam split into 2 separate 20% categories instead of 1 merged 40%
+    double labSum = sumCategoryPercentages(studentScores, maxScores, 0, numLabs);
+    double quizSum = sumCategoryPercentages(studentScores, maxScores, numLabs, numQuizzes);
+    double exam1Sum = sumCategoryPercentages(studentScores, maxScores, examStart, 1);
+    double exam2Sum = sumCategoryPercentages(studentScores, maxScores, examStart + 1, 1);
+    double projectSum = sumCategoryPercentages(studentScores, maxScores, projectStart, numProjects);
+    double finalexamSum = sumCategoryPercentages(studentScores, maxScores, finalStart, numFinal);
+
+    // sum / count = average percentage for the category
+    avgLab = labSum / numLabs;
+    avgQuiz = quizSum / numQuizzes;
+    avgExam1 = exam1Sum / 1;
+    avgExam2 = exam2Sum / 1;
+    avgProject = projectSum / numProjects;
+    avgFinal = finalexamSum / numFinal;
+}
+
+void computeClassAverages(string scoresFile, double &classLab, double &classQuiz, double &classExam1,
+                          double &classExam2, double &classProject, double &classFinal)
+{
+    int numLabs;
+    int numQuizzes;
+    int numExams;
+    int numProjects;
+    int numFinal;
+    ifstream in;
+    in.open(scoresFile);
+
+    in >> numLabs >> numQuizzes >> numExams >> numProjects >> numFinal;
+    int total = numLabs + numQuizzes + numExams + numProjects + numFinal;
+
+    vector<int> maxScores(total);
+    for (int i = 0; i < total; i++)
+    {
+        in >> maxScores[i];
+    }
+
+    string line;
+    getline(in, line); // eat teh leftover newline, same as the last function
+
+    double labTotal = 0;
+    double quizTotal = 0;
+    double exam1Total = 0;
+    double exam2Total = 0;
+    double projectTotal = 0;
+    double finalTotal = 0;
+    int studentsCounted = 0;
+
+    while (getline(in, line))
+    {
+        stringstream ss(line);
+        vector<int> studentScores(total);
+        bool hasScores = true;
+
+        for (int j = 0; j < total; j++)
+        {
+            if (!(ss >> studentScores[j]))
+            {
+                hasScores = false;
+                break;
+            }
+        }
+        if (!hasScores)
+        {
+            continue;
+        }
+
+        double avgLab;
+        double avgQuiz;
+        double avgExam1;
+        double avgExam2;
+        double avgProject;
+        double avgFinal;
+        computeCategoryAverages(studentScores, maxScores, numLabs, numQuizzes, numExams, numProjects, numFinal,
+                                avgLab, avgQuiz, avgExam1, avgExam2, avgProject, avgFinal);
+
+        labTotal += avgLab;
+        quizTotal += avgQuiz;
+        exam1Total += avgExam1;
+        exam2Total += avgExam2;
+        projectTotal += avgProject;
+        finalTotal += avgFinal;
+        studentsCounted++;
+    }
+
+    in.close();
+
+    classLab = labTotal / studentsCounted;
+    classQuiz = quizTotal / studentsCounted;
+    classExam1 = exam1Total / studentsCounted;
+    classExam2 = exam2Total / studentsCounted;
+    classProject = projectTotal / studentsCounted;
+    classFinal = finalTotal / studentsCounted;
+}
+
+// Prints the logged-in student's category averages next to the whole class's averages.
+void printClassComparison(string scoresFile, double avgLab, double avgQuiz, double avgExam1,
+                           double avgExam2, double avgProject, double avgFinal)
+{
+    double classLab, classQuiz, classExam1, classExam2, classProject, classFinal;
+    computeClassAverages(scoresFile, classLab, classQuiz, classExam1, classExam2, classProject, classFinal);
+
+    cout << fixed << setprecision(2);
+    cout << endl;
+    cout << "Class Average Comparison:" << endl;
+    cout << "Labs:    You " << avgLab << "%  |  Class " << classLab << "%" << endl;
+    cout << "Quiz:    You " << avgQuiz << "%  |  Class " << classQuiz << "%" << endl;
+    cout << "Exam 1:  You " << avgExam1 << "%  |  Class " << classExam1 << "%" << endl;
+    cout << "Exam 2:  You " << avgExam2 << "%  |  Class " << classExam2 << "%" << endl;
+    cout << "Project: You " << avgProject << "%  |  Class " << classProject << "%" << endl;
+    cout << "Final:   You " << avgFinal << "%  |  Class " << classFinal << "%" << endl;
+}
+
 // Converts a final percentage to a letter grade (A/B/C/D/F).
 string lettergrade(double totalPercentage) //  this should be good enoguh
 {
@@ -304,26 +428,14 @@ void generateScoreReport(string scoresFile, int loggedInRowIndex, string loggedI
 
     in.close();
 
-    // start index of each category = sum of the counts before it
+    // start index of each category = sum of the counts before it (still needed for printCategoryScores below)
     int examStart = numLabs + numQuizzes;
     int projectStart = examStart + numExams;
     int finalStart = projectStart + numProjects;
 
-    // exam split into 2 separate 20% categories instead of 1 merged 40%
-    double labSum = sumCategoryPercentages(studentScores, maxScores, 0, numLabs);
-    double quizSum = sumCategoryPercentages(studentScores, maxScores, numLabs, numQuizzes);
-    double exam1Sum = sumCategoryPercentages(studentScores, maxScores, examStart, 1);
-    double exam2Sum = sumCategoryPercentages(studentScores, maxScores, examStart + 1, 1);
-    double projectSum = sumCategoryPercentages(studentScores, maxScores, projectStart, numProjects);
-    double finalexamSum = sumCategoryPercentages(studentScores, maxScores, finalStart, numFinal);
-
-    // sum / count = average percentage for the category
-    double avglab = labSum / numLabs;
-    double avgquiz = quizSum / numQuizzes;
-    double avgexam1 = exam1Sum / 1;
-    double avgexam2 = exam2Sum / 1;
-    double avgproject = projectSum / numProjects;
-    double avgfinalexam = finalexamSum / numFinal;
+    double avglab, avgquiz, avgexam1, avgexam2, avgproject, avgfinalexam;
+    computeCategoryAverages(studentScores, maxScores, numLabs, numQuizzes, numExams, numProjects, numFinal,
+                            avglab, avgquiz, avgexam1, avgexam2, avgproject, avgfinalexam);
 
     // apply each category's weight
     double labpercentage = avglab * 0.15;
@@ -357,4 +469,6 @@ void generateScoreReport(string scoresFile, int loggedInRowIndex, string loggedI
     cout << "This is your weighted percentage for each category: " << "Labs: " << labpercentage << "% " << "Quiz: " << quizpercentage << "% " << "Exam 1: " << exam1percentage << "% " << "Exam 2: " << exam2percentage << "% " << "Project: " << projectpercentage << "% " << "Final: " << finalexampercentage << "%" << endl;
     cout << "This your total final percentage: " << totalPercentage << "%" << endl;
     cout << "This is your final letter grade: " << finallettergrade << endl;
+
+    printClassComparison(scoresFile, avglab, avgquiz, avgexam1, avgexam2, avgproject, avgfinalexam);
 }

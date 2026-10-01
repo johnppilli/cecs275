@@ -80,6 +80,40 @@ std::string randomLowerCaseLetter();
 double sumCategoryPercentages(std::vector<int> &studentScores, std::vector<int> &maxScores, int startIndex, int count);
 
 /**
+ * This function computes one student's average percentage earned in each of the six
+ * weighted categories (labs, quizzes, exam 1, exam 2, project, final exam). Results are
+ * written back through the reference parameters so the same logic can be reused both for
+ * the logged-in student's own report and for every student when building class averages.
+ * @param studentScores the student's scores
+ * @param maxScores     the maximum possible scores, in the same order
+ * @param numLabs, numQuizzes, numExams, numProjects, numFinal  how many assignments are in each category
+ * @param avgLab, avgQuiz, avgExam1, avgExam2, avgProject, avgFinal  set to this student's average percentage for each category
+ */
+void computeCategoryAverages(std::vector<int> &studentScores, std::vector<int> &maxScores,
+                              int numLabs, int numQuizzes, int numExams, int numProjects, int numFinal,
+                              double &avgLab, double &avgQuiz, double &avgExam1, double &avgExam2,
+                              double &avgProject, double &avgFinal);
+
+/**
+ * This function reads every student's row in the scores file and computes the whole
+ * class's average percentage in each of the six weighted categories. Students with a
+ * blank row are skipped entirely so they don't pull the class average down.
+ * @param scoresFile the scores file to read from
+ * @param classLab, classQuiz, classExam1, classExam2, classProject, classFinal  set to the class average percentage for each category
+ */
+void computeClassAverages(std::string scoresFile, double &classLab, double &classQuiz, double &classExam1,
+                           double &classExam2, double &classProject, double &classFinal);
+
+/**
+ * This function prints a comparison between the logged-in student's category averages
+ * and the whole class's average for the same categories.
+ * @param scoresFile the scores file to read from, used to compute the class averages
+ * @param avgLab, avgQuiz, avgExam1, avgExam2, avgProject, avgFinal  the logged-in student's own category averages
+ */
+void printClassComparison(std::string scoresFile, double avgLab, double avgQuiz, double avgExam1,
+                           double avgExam2, double avgProject, double avgFinal);
+
+/**
  * This function converts a final percentage into a letter grade:
  * 90+ = A, 80-89.99 = B, 70-79.99 = C, 60-69.99 = D, below 60 = F.
  * @param totalPercentage the final weighted percentage
