@@ -21,11 +21,6 @@ Car::Car(std::string mColor, std::string mEngineType, int mYear, std::string mMa
     model = mModel;
 } // Overloaded constructor
 
-Car::~Car()
-{
-    cout << "Destorying a car" << endl;
-}
-
 // Setters
 void Car::setColor(std::string mColor)
 {
@@ -95,5 +90,6 @@ ostream &operator<<(ostream &out, const Car &aCar)
     out << "Engine Type: " << aCar.engineType << endl;
     out << "Make: " << aCar.make << endl;
     out << "Model: " << aCar.model << endl;
+
     return out;
 }

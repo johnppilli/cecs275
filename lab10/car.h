@@ -1,6 +1,7 @@
 #ifndef CAR_H
 #define CAR_H
 
+
 #include <string>
 
 class Car
@@ -49,5 +50,7 @@ public:
     void reverse();
     void left();
     void right();
-    friend ostream& operator<<(ostream&out, const Car& aCar) //?????
-}
+    friend std::ostream& operator<<(std::ostream&out, const Car& aCar); //?????
+};
+
+#endif

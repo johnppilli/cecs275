@@ -1,7 +1,7 @@
 #include <iostream>
 #include "car.h"
-#include <iostream> 
-#include <string> 
+#include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -17,8 +17,8 @@ int main()
     bmw.left();
     bmw.right();
 
-    cout << bmw << endl;
-
-
+    Car *toyota = new Car("green", "V8", 2027, "Toyota", "Tundra");
+    toyota->drive();
+    cout << bmw << nissan << *toyota << endl;
     return 0;
 }
