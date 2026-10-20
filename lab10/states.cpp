@@ -2,13 +2,14 @@
 #include <cstring>
 #include <string>
 #include <fstream>
+#include <cstdio>
 
 using namespace std;
 
 /**
  * @brief Inserts commas into a string of digits (e.g. "4447100 --> 4,447,100")
  * @param digits C-string of digits to format
- * @param result Output buffer for teh formattted C-string; must be large enough
+ * @param result Output buffer for the formattted C-string; must be large enough
  *               for the digits, the commas, and the '\0'.
  */
 
@@ -27,6 +28,15 @@ void formatWithCommas(const char *digits, char *result)
     }
     result[j] = '\0';
 }
+
+/**
+ * @brief Splits a comma-separated line into name, abbreviation, and population
+ *
+ * @param line Input line, e.g. "Alabama,AL,4447100"
+ * @param name Output: the state name
+ * @param abbr Output: the abbreviation
+ * @param population Output: the population digits
+ */
 
 void parseLine(const char *line, char *name, char *abbr, char *population)
 {
@@ -53,15 +63,33 @@ void parseLine(const char *line, char *name, char *abbr, char *population)
     strcpy(population, token);
 }
 
+void formatLine(const char *name, const char *abbr, const char *population, char *row)
+{
+
+    char withCommas[20]; // why 20? is it acoutning for overflow? why couldnt ijust do n? or
+                         // i ahve to declare the first 20 spaces for the population of
+
+    formatWithCommas(population, withCommas); //
+
+    snprintf(row, 100, "%-18s %-6s %12s", name, abbr, withCommas);
+    // row is where the text goes (output array)
+    // 100 is the max characters (protects for overflow)
+    //"%s %s is the template, each %s is a slot that gets filled by one of the follwoing values in order"
+    // name, abbr are the values that fill those slots
+}
+
+
+
+
+
+
 int main()
 {
-    char name[50], abbr[5], pop[20], formatted[20];
-
-    parseLine("New Hampshire,NH,1235786", name, abbr, pop);
-    formatWithCommas(pop, formatted);
-
-    cout << name << endl;
-    cout << abbr << endl;
-    cout << formatted << endl;
+    char name[50], abbr[5], pop[20], row[100];
+    
+    parseLine("Alabama,AL,4447100", name, abbr, pop);
+    formatLine(name, abbr, pop, row);
+    cout << row << endl;
+    
     return 0;
 }
