@@ -11,7 +11,7 @@ static const string MONTH_NAMES[12] = {"January", "February", "March", "April", 
 // Helpers
 bool Date::isLeap(int mYear)
 {
-    return (mYear % 4 == 0 && mYear % 100 != 0) || mYear % 400 == 0; 
+    return (mYear % 4 == 0 && mYear % 100 != 0) || mYear % 400 == 0;
 }
 int Date::daysInMonth(int mMonth, int mYear)
 {
@@ -179,15 +179,32 @@ int Date::compare(const Date &other) const
 
 bool Date::operator==(const Date &other) const
 {
-    return (compare(other) == 0); //0 is equal
+    return (compare(other) == 0); // 0 is equal
 }
 
 bool Date::operator>(const Date &other) const
 {
-    return (compare(other) == 1); //1 is later
+    return (compare(other) == 1); // 1 is later
 }
 
 bool Date::operator<(const Date &other) const
 {
     return (compare(other) == -1); //-1 is earlier
 }
+
+Date Date::operator+(int n) const
+{
+    int target = toDays() + n;
+    if (year < 1 || target < 1) // unset date, or before 01/01/0001
+        return Date();
+    return fromDays(target); // returns a new date, this one is unchanged
+}
+
+Date Date::operator-(int n) const
+{
+    int target = toDays() - n;
+    if (year < 1 || target < 1)
+        return Date();
+    return fromDays(target);
+}
+

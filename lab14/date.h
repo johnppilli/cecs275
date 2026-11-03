@@ -50,7 +50,8 @@ public:
     bool operator==(const Date &other) const;
     bool operator>(const Date &other) const;
     bool operator<(const Date &other) const;
-
+    Date operator+(int n) const; // date n days in the future
+    Date operator-(int n) const; // date n days in the past
 };
 
 #endif

@@ -123,5 +123,25 @@ int main()
     cout << "a > b: " << (a > b) << " (expect 0)" << endl;
     cout << "a == a: " << (a == a) << " (expect 1)" << endl;
 
+    cout << "\n=== Date + n and Date - n ===" << endl;
+    cout << "12/31/2025 + 1 = ";
+    (Date(12, 31, 2025) + 1).displayLong(); // expect January 1, 2026
+    cout << "2/28/2024 + 1 = ";
+    (Date(2, 28, 2024) + 1).displayLong(); // expect February 29, 2024
+    cout << "1/1/2025 + 365 = ";
+    (Date(1, 1, 2025) + 365).displayLong(); // expect January 1, 2026
+    cout << "1/1/2026 - 1 = ";
+    (Date(1, 1, 2026) - 1).displayLong(); // expect December 31, 2025
+    cout << "3/1/2024 - 1 = ";
+    (Date(3, 1, 2024) - 1).displayLong(); // expect February 29, 2024
+    cout << "8/25/2025 - 0 = ";
+    (Date(8, 25, 2025) - 0).displayLong(); // expect August 25, 2025
+    Date orig(8, 25, 2025);
+    Date later = orig + 10;
+    cout << "orig after orig + 10 (unchanged): ";
+    orig.displayLong(); // expect August 25, 2025
+    cout << "later = orig + 10: ";
+    later.displayLong(); // expect September 4, 2025
+
     return 0;
 }
