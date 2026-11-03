@@ -1,6 +1,8 @@
 #ifndef DATE_H
 #define DATE_H
 
+#include <iostream>
+
 class Date
 {
 private:
@@ -25,6 +27,8 @@ public:
      * @param mYear year greater than 0
      */
     Date(int mMonth, int mDay, int mYear);
+    Date(const Date &other);              // copy constructor
+    Date &operator=(const Date &other);   // assignment operator
 
     // Setters (ignore invalid values)
     void setMonth(int mMonth);
@@ -52,6 +56,11 @@ public:
     bool operator<(const Date &other) const;
     Date operator+(int n) const; // date n days in the future
     Date operator-(int n) const; // date n days in the past
+
+    friend std::ostream &operator<<(std::ostream &out, const Date &d);
+
+    int operator-(const Date &other) const;
+
 };
 
 #endif

@@ -82,6 +82,22 @@ Date::Date(int mMonth, int mDay, int mYear)
         year = 0;
     }
 }
+Date::Date(const Date &other) // copy constructor, builds a new Date from an existing one
+{
+    month = other.month;
+    day = other.day;
+    year = other.year;
+}
+Date &Date::operator=(const Date &other) // assignment, overwrites an existing Date with another
+{
+    if (this != &other) // skip the copy if someone writes d = d
+    {
+        month = other.month;
+        day = other.day;
+        year = other.year;
+    }
+    return *this; // lets you chain: a = b = c
+}
 
 // Setters
 void Date::setMonth(int mMonth)
@@ -207,4 +223,16 @@ Date Date::operator-(int n) const
         return Date();
     return fromDays(target);
 }
+
+std::ostream &operator<<(std::ostream &out, const Date &d)
+{
+    out << MONTH_NAMES[d.month - 1] << " " << d.day << ", " << d.year;
+    return out;
+}
+
+int Date::operator-(const Date &other) const
+{
+    return daysBetween(other);
+}
+
 

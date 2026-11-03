@@ -143,5 +143,37 @@ int main()
     cout << "later = orig + 10: ";
     later.displayLong(); // expect September 4, 2025
 
+    cout << "\n=== operator<< ===" << endl;
+    cout << Date(8, 25, 2025) << endl; // expect august 25, 2025
+
+    cout << "\n=== Date - Date ===" << endl;
+    cout << "3/1/2025 - 1/1/2025 = " << (Date(3, 1, 2025) - Date(1, 1, 2025)) << " (expect 59)" << endl;
+    cout << "3/1/2024 - 1/1/2024 = " << (Date(3, 1, 2024) - Date(1, 1, 2024)) << " (expect 60)" << endl;
+    cout << "8/25/2025 - 8/25/2025 = " << (Date(8, 25, 2025) - Date(8, 25, 2025)) << " (expect 0)" << endl;
+
+    cout << "\n=== Copy constructor ===" << endl;
+    Date orig2(8, 25, 2025);
+    Date copy1(orig2);  // copy constructor
+    Date copy2 = orig2; // also the copy constructor (creating a new date)
+    orig2.increment();
+    cout << "orig2 after increment: " << orig2 << " (expect August 26, 2025)" << endl;
+    cout << "copy1 unchanged: " << copy1 << " (expect August 25, 2025)" << endl;
+    cout << "copy2 unchanged: " << copy2 << " (expect August 25, 2025)" << endl;
+
+    cout << "\n=== operator= ===" << endl;
+    Date x(1, 1, 2025);
+    Date y(12, 31, 2030);
+    x = y; // assignment operator (x already existed)
+    cout << "x after x = y: " << x << " (expect December 31, 2030)" << endl;
+    y.increment();
+    cout << "y after increment: " << y << " (expect January 1, 2031)" << endl;
+    cout << "x unchanged: " << x << " (expect December 31, 2030)" << endl;
+    Date p, q, r(7, 4, 2026);
+    p = q = r; // chaining
+    cout << "p = q = r: " << p << ", " << q << " (expect July 4, 2026 twice)" << endl;
+    Date &sameAsX = x;
+    x = sameAsX; // self-assignment is safe
+    cout << "x after x = x: " << x << " (expect December 31, 2030)" << endl;
+
     return 0;
 }
