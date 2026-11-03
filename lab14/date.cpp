@@ -176,3 +176,18 @@ int Date::compare(const Date &other) const
         return day > other.day ? 1 : -1;
     return 0;
 }
+
+bool Date::operator==(const Date &other) const
+{
+    return (compare(other) == 0); //0 is equal
+}
+
+bool Date::operator>(const Date &other) const
+{
+    return (compare(other) == 1); //1 is later
+}
+
+bool Date::operator<(const Date &other) const
+{
+    return (compare(other) == -1); //-1 is earlier
+}

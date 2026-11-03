@@ -115,5 +115,13 @@ int main()
     cout << "8/25/2025 vs 1/1/2026: " << Date(8, 25, 2025).compare(Date(1, 1, 2026)) << " (expect -1)" << endl;
     cout << "8/25/2025 vs 12/31/2024: " << Date(8, 25, 2025).compare(Date(12, 31, 2024)) << " (expect 1)" << endl;
 
+    cout << "\n=== Comparison operators ===" << endl;
+    Date a(1, 1, 2025);
+    Date b(6, 15, 2025);
+    cout << "a == b: " << (a == b) << " (expect 0)" << endl;
+    cout << "a < b: " << (a < b) << " (expect 1)" << endl;
+    cout << "a > b: " << (a > b) << " (expect 0)" << endl;
+    cout << "a == a: " << (a == a) << " (expect 1)" << endl;
+
     return 0;
 }

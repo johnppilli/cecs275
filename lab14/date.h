@@ -47,8 +47,9 @@ public:
     void increment();
     void decrement();
     int compare(const Date &other) const; // 1, 0, or -1
-    
-
+    bool operator==(const Date &other) const;
+    bool operator>(const Date &other) const;
+    bool operator<(const Date &other) const;
 
 };
 
